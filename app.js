@@ -1,8 +1,10 @@
 var express = require("express"),  
     app = express(),
+    http = require ("http"),
     bodyParser  = require("body-parser"),
-    methodOverride = require("method-override");
-    mongoose = require('mongoose');
+    methodOverride = require("method-override"),
+    mongoose = require('mongoose'),
+    server = http.createServer(app);
 
 app.use(bodyParser.urlencoded({ extended: false }));  
 app.use(bodyParser.json());  
