@@ -1,7 +1,7 @@
 // Include dependencies
 var express = require('express');
-var fse = require('fs-extended');
-//var fse = require('fs-extra');
+//var fse = require('fs-extended');
+var fse = require('fs-extra');
 var http = require('http');
 //var methodOverride = require('method-override');
 var mongoose = require('mongoose');
@@ -30,21 +30,21 @@ app.post('/', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'track', ma
 		var cover = req.files['cover'][0];
 		console.log('Cover uploaded: ' + cover);
 		
-		fse.moveSync(cover.path, '/mnt/nas/covers/' + cover.originalname), function (err) {
-   			if (err)
-   				return console.error(err);
-  			console.log('The cover was uploaded successfully');
-		});
-
-//		try {
-//			fse.copySync(cover.path, '/mnt/nas/covers/' + cover.originalname);
-//		} catch (err) {
-//			console.error('Error: ' + err.message)
-//		}
-//		fse.unlink(cover.path, function(err){
-//			if (err)
-//				return console.error(err);
+//		fse.moveSync(cover.path, '/mnt/nas/covers/' + cover.originalname), function (err) {
+//   			if (err)
+//   				return console.error(err);
+//  			console.log('The cover was uploaded successfully');
 //		});
+
+		try {
+			fse.copySync(cover.path, '/mnt/nas/covers/' + cover.originalname);
+		} catch (err) {
+			console.error('Error: ' + err.message)
+		}
+		fse.unlink(cover.path, function(err){
+			if (err)
+				return console.error(err);
+		});
 	}
 	res.send(200);
 })
